@@ -1,42 +1,48 @@
-<?php
-$dbhost = getenv("DB_HOST");
-$dbport = getenv("DB_PORT");
-$dbuser = getenv("DB_USER");
-$dbname = getenv("DB_DATABASE");
-$dbpwd = getenv("DB_PASSWORD");
-$connection_string="host=$dbhost port=$dbport dbname=$DB_DATABASE user=$DB_USER password=$DB_PASSWORD";
-$connection = pg_connect($connection_string);
-$query = "SELECT * from users";
-?>
+ <html>
 
-<table border="5" cellspacing="1" cellpadding="2">
-<tr>
-<td>
-<font face="Arial, Helvetica, sans-serif">ID</font>
-</td>
-<td>
-<font face="Arial, Helvetica, sans-serif">User Name</font>
-</td>
-</tr>
+  <head>
+   <title>Test</title>
+  </head>
 
-<?php
-$rs = $connection->query($query);
-while ($row = pg_fetch_assoc($rs)) {
+  <body bgcolor="white">
 
-?>
+  <?
+  $dbhost = getenv("DB_HOST");
+  $dbport = getenv("DB_PORT");
+  $dbuser = getenv("DB_USER");
+  $dbname = getenv("DB_DATABASE");
+  $dbpwd = getenv("DB_PASSWORD");
+  $link = pg_Connect("host=$dbhost dbname=$DB_NAME user=$DB_USER password=$DB_PASSWORD");
+  $result = pg_exec($link, "select * from users");
+  $numrows = pg_numrows($result);
+  echo "<p>link = $link<br>
+  result = $result<br>
+  numrows = $numrows</p>
+  ";
+  ?>
 
-<tr>
-<td>
-<font face="Arial, Helvetica, sans-serif"><?php echo $row['user_id']; ?></font>
-</td>
-<td>
-<font face="Arial, Helvetica, sans-serif"><?php echo $row['username']; ?></font>
-</td>
-</tr>
+  <table border="1">
+  <tr>
+   <th>First name</th>
+   <th>ID</th>
+  </tr>
+  <?
 
+   // Loop on rows in the result set.
 
-<?php
-}
-pg_close($connection);
+   for($ri = 0; $ri < $numrows; $ri++) {
+    echo "<tr>\n";
+    $row = pg_fetch_array($result, $ri);
+    echo " <td>", $row["username"], "</td>
+   <td>", $row["user_id"], "</td>
+  </tr>
+  ";
+   }
+   pg_close($link);
+  ?>
+  </table>
 
-?>
+  </body>
+
+  </html>
+
