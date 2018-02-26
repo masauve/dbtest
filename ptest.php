@@ -13,7 +13,7 @@
   $dbname = getenv("DB_DATABASE");
   $dbpwd = getenv("DB_PASSWORD");
   $connect_string = "host=$dbhost dbname=$DB_NAME user=$DB_USER password=$DB_PASSWORD";
-  \echo $connect_string
+  echo "Connect String: $connect_string";
   $link = pg_Connect($connect_string);
   $result = pg_exec($link, "select * from users");
   $numrows = pg_numrows($result);
