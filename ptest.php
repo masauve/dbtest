@@ -6,7 +6,7 @@
 
   <body bgcolor="white">
 
-  <?
+  <?php
   $dbhost = getenv("DB_HOST");
   $dbport = getenv("DB_PORT");
   $dbuser = getenv("DB_USER");
@@ -26,17 +26,14 @@
    <th>First name</th>
    <th>ID</th>
   </tr>
-  <?
+  <?php
 
    // Loop on rows in the result set.
 
    for($ri = 0; $ri < $numrows; $ri++) {
     echo "<tr>\n";
     $row = pg_fetch_array($result, $ri);
-    echo " <td>", $row["username"], "</td>
-   <td>", $row["user_id"], "</td>
-  </tr>
-  ";
+    echo " <td>", $row["username"], "</td> <td>", $row["user_id"], "</td> </tr> ";
    }
    pg_close($link);
   ?>
